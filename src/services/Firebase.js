@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { collection, addDoc } from "firebase/firestore";
+import { getDatabase, push, ref, set } from "firebase/database";
+import {getAuth} from 'firebase/auth'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -9,19 +10,21 @@ const firebaseConfig = {
   storageBucket: "only-text-5ec40.appspot.com",
   messagingSenderId: "284715440481",
   appId: "1:284715440481:web:8bc189c01ea5aca0188d20",
+  databaseURL:
+    "https://only-text-5ec40-default-rtdb.asia-southeast1.firebasedatabase.app/",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-try {
-  const docRef = await addDoc(collection(db, "users"), {
-    first: "Ada",
-    last: "Lovelace",
-    born: 1815,
-  });
-  console.log("Document written with ID: ", docRef.id);
-} catch (e) {
-  console.error("Error adding document: ", e);
-}
+const sendMsg = (msg, dir) => {
+  const newChatRef = push(ref(db, `chats/${dir}`));
+  set(newChatRef, msg);
+};
 
+
+
+const auth  = getAuth(app)
+
+export { sendMsg, db,auth };
+export default sendMsg;

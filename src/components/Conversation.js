@@ -5,7 +5,7 @@ const Conversation = ({ messages }) => {
   return (
     <Box>
       {messages.map((line) => (
-        <Typography variant="body1">
+        <Typography key={line.id} variant="body1">
           {line.sender} : {line.message}
         </Typography>
       ))}

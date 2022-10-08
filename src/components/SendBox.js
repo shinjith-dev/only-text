@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import React, { useState } from "react";
 
-const SendBox = ({ addYourMessage }) => {
+const SendBox = ({ addYourMsg }) => {
   const [inputMsg, setInputMsg] = useState("");
 
   const handleMsgChange = (e) => {
@@ -10,7 +10,7 @@ const SendBox = ({ addYourMessage }) => {
 
   const handleMsgSubmit = (e) => {
     e.preventDefault();
-    addYourMessage(inputMsg);
+    addYourMsg(inputMsg);
     setInputMsg("");
   };
 

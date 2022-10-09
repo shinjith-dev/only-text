@@ -1,73 +1,67 @@
-import { Alert, Box, CssBaseline, Snackbar } from "@mui/material";
 import { onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import AuthUser from "./components/AuthUser";
-import Profile from "./components/Profile";
-import { auth } from "./services/Firebase";
-// import Chat from "./components/Chat";
+import { auth } from "./services/firebase";
 
-function App() {
-  const [authenticated, setAuthenticated] = useState(false);
+const App = () => {
   const [user, setUser] = useState(null);
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: "",
-    severity: "success",
-  });
 
   useEffect(() => {
     if (auth.currentUser !== null) {
       setUser(auth.currentUser);
-      setAuthenticated(true);
     }
   }, []);
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-        setAuthenticated(true);
-      }
-    });
-  }, [authenticated]);
-
-  console.log(user);
-  const handleSnackClose = () => {
-    setSnackbar((prev) => ({ ...prev, open: false }));
-  };
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setUser(user);
+    }
+  });
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        width: "100vw",
+    <Container
+      fluid
+      className="p-0"
+      style={{
         height: "100vh",
-        alignItems: "center",
-        justifyContent: "center",
+        width: "100vw",
       }}
     >
-      <CssBaseline />
-      {authenticated ? (
-        <Profile user={user} setAuthenticated={val=>{setAuthenticated(val)}}/>
-      ) : (
-        <AuthUser setAuthenticated={setAuthenticated} setSnackbar={setSnackbar}/>
-      )}
-      {/* <Chat /> */}
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={3000}
-        onClose={handleSnackClose}
-      >
-        <Alert
-          onClose={handleSnackClose}
-          severity={snackbar.severity}
-          sx={{ width: "100%" }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
-    </Box>
+      <Navbar as="nav" bg="dark" expand="sm" variant="dark" sticky="top">
+        <Container>
+          <Navbar.Brand href="#home">0NLY T3XT</Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbar-nav" />
+          <Navbar.Collapse id="navbar-nav">
+            <Nav className="ms-auto p-1 pt-2">
+              <Nav.Item className="m-1">
+                <div className="d-grid gap-2">
+                  <Button variant="secondary">REGISTER</Button>
+                </div>
+              </Nav.Item>
+              <Nav.Item className="m-1">
+                <div className="d-grid gap-2">
+                  <Button variant="secondary">SIGN IN</Button>
+                </div>
+              </Nav.Item>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <Container fluid="md" className="py-3" as="main">
+        {/* {authenticated ? (
+          <Profile
+            user={user}
+            setAuthenticated={(val) => {
+              setAuthenticated(val);
+            }}
+          />
+        ) : ( */}
+        <AuthUser user={user} setUser={(user) => setUser(user)} />
+        {/* )} */}
+      </Container>
+    </Container>
   );
-}
+};
 
 export default App;

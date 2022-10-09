@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, push, ref, set } from "firebase/database";
-import {getAuth} from 'firebase/auth'
+import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -22,9 +23,9 @@ const sendMsg = (msg, dir) => {
   set(newChatRef, msg);
 };
 
+const storage = getStorage(app);
 
+const auth = getAuth(app);
 
-const auth  = getAuth(app)
-
-export { sendMsg, db,auth };
+export { sendMsg, db, auth, storage };
 export default sendMsg;

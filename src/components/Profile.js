@@ -1,23 +1,17 @@
-import { Box, Button } from "@mui/material";
-import { Container } from "@mui/system";
-import React from "react";
-import { auth } from "../services/Firebase";
+import React from 'react'
+import { Button, Container } from 'react-bootstrap';
+import { auth } from '../services/Firebase';
 
 const Profile = ({ user,setAuthenticated }) => {
-const handleSignOut = ()=>{
+    const handleSignOut = ()=>{
     auth.signOut().then(()=>setAuthenticated(false));
 }
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-      >
-        {user.email}
+    <Container as='main' fluid='sm' className='bg-dark d-flex flex-column align-items-center p-2'>
+         {user.email}
         {user.displayName && <p>{user.displayName}</p> }
-        <Button variant="contained" onClick={handleSignOut}>SIGN OUT</Button>
-      </Box>
-    </Container>
-  );
-};
+<Button variant='primary' onClick={handleSignOut}>Sign Out</Button>
+    </Container>)
+}
 
-export default Profile;
+export default Profile

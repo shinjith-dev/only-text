@@ -1,4 +1,8 @@
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  getRedirectResult,
+  GoogleAuthProvider,
+  signInWithRedirect,
+} from "firebase/auth";
 import { ref, set } from "firebase/database";
 import React from "react";
 import { Container } from "react-bootstrap";
@@ -9,7 +13,8 @@ import { auth, db } from "../services/firebase";
 const SignUp = ({ setPage, user, setAnyError }) => {
   const handleGoogleSignUp = () => {
     const providerG = new GoogleAuthProvider();
-    signInWithPopup(auth, providerG)
+    signInWithRedirect(auth, providerG);
+    getRedirectResult(auth)
       .then((result) => {
         const user = result.user;
         set(ref(db, "users/" + user.uid), { email: user.email });

@@ -6,14 +6,17 @@ body {
   margin: 0;
 }
 
-#send-box {
-  border: none;
-  background-color: inherit;
-  color: inherit;
-  font-size: inherit;
-}
-
-#send-box:focus {
+#term-textfield {
   border: none;
   outline: none;
+  background-color: inherit;
+  color: lightgrey;
+  font-size: inherit;
+  font-family: inherit;
+  resize: none;
+}
+
+pre {
+  margin: 0;
+  word-wrap: break-word;
 }

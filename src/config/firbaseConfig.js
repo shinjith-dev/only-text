@@ -1,7 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, push, ref, set } from "firebase/database";
-import { getAuth } from "firebase/auth";
-import { getStorage } from "firebase/storage";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -16,16 +14,21 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
 
-const sendMsg = (msg, dir) => {
-  const newChatRef = push(ref(db, `chats/${dir}`));
-  set(newChatRef, msg);
-};
+export const auth = getAuth(app);
+export const provider = new GoogleAuthProvider();
 
-const storage = getStorage(app);
+// const app = initializeApp(firebaseConfig);
+// const db = getDatabase(app);
 
-const auth = getAuth(app);
+// const sendMsg = (msg, dir) => {
+//   const newChatRef = push(ref(db, `chats/${dir}`));
+//   set(newChatRef, msg);
+// };
 
-export { sendMsg, db, auth, storage };
-export default sendMsg;
+// const storage = getStorage(app);
+
+// const auth = getAuth(app);
+
+// export { sendMsg, db, auth, storage };
+// export default sendMsg;
